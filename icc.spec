@@ -14,10 +14,10 @@ License:	commercial, to run needed license from intel.
 Group:		Development/Tools
 Source0:	ftp://download.intel.com/software/products/compilers/downloads/l_cc_p_%{version}.tar.gz
 # Source0-md5:	df3deb1b1cfe56cf64d1c7cd2e694805
-URL:		http://www.intel.com
-ExclusiveArch:	%{ix86}
 NoSource:	0
-Requires:	%{name}-libs = %{fileversion}
+URL:		http://www.intel.com
+Requires:	%{name}-libs = %{fileversion}-%{release}
+ExclusiveArch:	%{ix86}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -35,7 +35,7 @@ Group:		Libraries
 Libraries used by programs compiled with Intel C Compiler.
 
 %description libs -l pl
-Biblioteki u¿ywane przez programy kompilowane za pomoc± Intelowskiego
+Biblioteki u¿ywane przez programy kompilowane za pomoc± intelowskiego
 kompilatora C.
 
 %package -n idb
@@ -70,7 +70,7 @@ install man/man1/*.1 $RPM_BUILD_ROOT%{_mandir}/man1
 install lib/* $RPM_BUILD_ROOT%{_libdir}
 cp -r include/* $RPM_BUILD_ROOT%{_includedir}/icc
 install licenses/* $RPM_BUILD_ROOT%{_datadir}/icc/licenses
-cd ../../
+cd ../..
 # intel debugger
 cd opt/intel_idb_*
 install bin/?idb $RPM_BUILD_ROOT%{_bindir}/idb
@@ -103,23 +103,26 @@ EOF
 %clean
 rm -rf $RPM_BUILD_ROOT
 
+%post	-p /sbin/ldconfig
+%postun	-p /sbin/ldconfig
+
 %files
 %defattr(644,root,root,755)
+%doc opt/intel_cc_*/doc/*
 %attr(755,root,root) %{_bindir}/*
-%{_libdir}/*.so
+%attr(755,root,root) %{_libdir}/*.so
 %{_libdir}/*.a
 %{_libdir}/*.o
-%{_mandir}/man1/ic*
 %{_includedir}/*
 %{_datadir}/%{name}
-%doc opt/intel_cc_*/doc/*
+%{_mandir}/man1/ic*
 
 %files libs
 %defattr(644,root,root,755)
-%{_libdir}/lib*.so.*
+%attr(755,root,root) %{_libdir}/lib*.so.*
 
 %files -n idb
 %defattr(644,root,root,755)
-%{_bindir}/idb
-%{_mandir}/man1/idb*
 %doc opt/intel_idb_*/doc/*
+%attr(755,root,root) %{_bindir}/idb
+%{_mandir}/man1/idb*
