@@ -10,7 +10,7 @@ Summary(pl):	Kompilator C Intela
 Name:		icc
 Version:	%{fileversion}
 Release:	0.1
-License:	commercial, to run needed license from intel.
+License:	commercial, needed license from Intel, not distributable
 Group:		Development/Tools
 Source0:	ftp://download.intel.com/software/products/compilers/downloads/l_cc_p_%{version}.tar.gz
 # NoSource0-md5:	df3deb1b1cfe56cf64d1c7cd2e694805
@@ -21,7 +21,7 @@ ExclusiveArch:	%{ix86}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
-Intel C Compilator.
+Intel C Compiler.
 
 %description -l pl
 Kompilator C Intela.
