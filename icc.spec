@@ -13,7 +13,7 @@ Release:	0.1
 License:	commercial, to run needed license from intel.
 Group:		Development/Tools
 Source0:	ftp://download.intel.com/software/products/compilers/downloads/l_cc_p_%{version}.tar.gz
-# Source0-md5:	df3deb1b1cfe56cf64d1c7cd2e694805
+# NoSource0-md5:	df3deb1b1cfe56cf64d1c7cd2e694805
 NoSource:	0
 URL:		http://www.intel.com
 Requires:	%{name}-libs = %{fileversion}-%{release}
