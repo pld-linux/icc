@@ -2,9 +2,9 @@
 # - check all licenses - maybe we can distribute it?
 # - fix "szambo" in %{_bindir}, maybe move unnecesary files to %{_libdir}/icc ?
 # - ia64 version ;)
-%define		fileversion	8.0.055
-%define		iccversion	8.0
-%define		idbversion	7.3.1
+%define		fileversion	9.0.021
+%define		iccversion	9.0
+%define		idbversion	9.0
 Summary:	Intel C Compiler
 Summary(pl):	Kompilator C Intela
 Name:		icc
@@ -57,14 +57,15 @@ Debugger dla programów kompilowanych kompilatorem C Intela od Intela.
 for i in intel-*-*.i386.rpm; do
 	rpm2cpio $i |cpio -i --no-absolute-filenames -d
 done;
-perl -p -i -e "s|<INSTALLDIR>|%{_prefix}|g" opt/intel_cc_*/bin/{icc,icpc,iccvars.csh,iccvars.sh}
+perl -p -i -e "s|<INSTALLDIR>|%{_prefix}|g" opt/intel/cc/%{iccversion}/bin/{icc,icpc,iccvars.csh,iccvars.sh}
+perl -p -i -e "s|<INSTALLDIR>|%{_prefix}|g" opt/intel/idb/%{idbversion}/bin/*.*sh
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_bindir},%{_libdir},%{_mandir}/man1,%{_includedir}/icc,%{_datadir}/icc/licenses}
 
 # intel compiler
-cd opt/intel_cc_*
+cd opt/opt/intel/cc/%{iccversion}
 install bin/* $RPM_BUILD_ROOT%{_bindir}
 install man/man1/*.1 $RPM_BUILD_ROOT%{_mandir}/man1
 install lib/* $RPM_BUILD_ROOT%{_libdir}
@@ -72,7 +73,7 @@ cp -r include/* $RPM_BUILD_ROOT%{_includedir}/icc
 install licenses/* $RPM_BUILD_ROOT%{_datadir}/icc/licenses
 cd ../..
 # intel debugger
-cd opt/intel_idb_*
+cd opt/opt/intel/idb/%{idbversion}
 install bin/?idb $RPM_BUILD_ROOT%{_bindir}/idb
 install man/man1/*.1 $RPM_BUILD_ROOT%{_mandir}/man1
 
