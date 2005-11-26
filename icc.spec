@@ -16,6 +16,7 @@ Source0:	ftp://download.intel.com/software/products/compilers/downloads/l_cc_p_%
 # NoSource0-md5:	df3deb1b1cfe56cf64d1c7cd2e694805
 NoSource:	0
 URL:		http://www.intel.com
+BuildRequires:	sed >= 4.0
 Requires:	%{name}-libs = %{fileversion}-%{release}
 ExclusiveArch:	%{ix86}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -53,12 +54,11 @@ Debugger dla programów kompilowanych kompilatorem C Intela od Intela.
 %prep
 %setup -q -n l_cc_p_%{fileversion}
 
-%build
 for i in intel-*-*.i386.rpm; do
-	rpm2cpio $i |cpio -i --no-absolute-filenames -d
-done;
-perl -p -i -e "s|<INSTALLDIR>|%{_prefix}|g" opt/intel/cc/%{iccversion}/bin/{icc,icpc,iccvars.csh,iccvars.sh}
-perl -p -i -e "s|<INSTALLDIR>|%{_prefix}|g" opt/intel/idb/%{idbversion}/bin/*.*sh
+	rpm2cpio $i | cpio -i --no-absolute-filenames -d
+done
+sed -i -e 's|<INSTALLDIR>|%{_prefix}|g' opt/intel/cc/%{iccversion}/bin/{icc,icpc,iccvars.csh,iccvars.sh}
+sed -i -e 's|<INSTALLDIR>|%{_prefix}|g' opt/intel/idb/%{idbversion}/bin/*.*sh
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -77,28 +77,16 @@ cd opt/opt/intel/idb/%{idbversion}
 install bin/?idb $RPM_BUILD_ROOT%{_bindir}/idb
 install man/man1/*.1 $RPM_BUILD_ROOT%{_mandir}/man1
 
-cat >$RPM_BUILD_ROOT%{_bindir}/icc <<EOF
+cat > $RPM_BUILD_ROOT%{_bindir}/icc <<'EOF'
 #!/bin/sh
-INTEL_LICENSE_FILE=/usr/share/icc/licenses;
-export INTEL_LICENSE_FILE
-if [ \$# != 0 ]
-then
- exec /usr/bin/iccbin "\$@";
-else
- exec /usr/bin/iccbin;
-fi
+export INTEL_LICENSE_FILE=/usr/share/icc/licenses
+exec /usr/bin/iccbin ${1:+"$@"}
 EOF
 
-cat >$RPM_BUILD_ROOT%{_bindir}/icpc <<EOF
+cat > $RPM_BUILD_ROOT%{_bindir}/icpc <<'EOF'
 #!/bin/sh
-INTEL_LICENSE_FILE=/usr/share/icc/licenses;
-export INTEL_LICENSE_FILE
-if [ \$# != 0 ]
-then
- exec /usr/bin/icpcbin "\$@";
-else
- exec /usr/bin/icpcbin;
-fi
+export INTEL_LICENSE_FILE=/usr/share/icc/licenses
+exec /usr/bin/icpcbin ${1:+"$@"}
 EOF
 
 %clean
