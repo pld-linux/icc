@@ -6,7 +6,7 @@
 %define		iccversion	9.0
 %define		idbversion	9.0
 Summary:	Intel C Compiler
-Summary(pl):	Kompilator C Intela
+Summary(pl.UTF-8):   Kompilator C Intela
 Name:		icc
 Version:	%{fileversion}
 Release:	0.1
@@ -24,32 +24,32 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %description
 Intel C Compiler.
 
-%description -l pl
+%description -l pl.UTF-8
 Kompilator C Intela.
 
 %package libs
 Summary:	Libraries for programs compiled by Intel C Compiler
-Summary(pl):	Biblioteki dla programów kompilowanych kompilatorem C Intela
+Summary(pl.UTF-8):   Biblioteki dla programÃ³w kompilowanych kompilatorem C Intela
 Group:		Libraries
 
 %description libs
 Libraries used by programs compiled with Intel C Compiler.
 
-%description libs -l pl
-Biblioteki u¿ywane przez programy kompilowane za pomoc± intelowskiego
+%description libs -l pl.UTF-8
+Biblioteki uÅ¼ywane przez programy kompilowane za pomocÄ… intelowskiego
 kompilatora C.
 
 %package -n idb
 Summary:	Intel Debugger
-Summary(pl):	Intelowski Debugger
+Summary(pl.UTF-8):   Intelowski Debugger
 Version:	%{idbversion}
 Group:		Development/Debuggers
 
 %description -n idb
 Debugger for programs compiled by Intel C Compiler from Intel.
 
-%description -n idb -l pl
-Debugger dla programów kompilowanych kompilatorem C Intela od Intela.
+%description -n idb -l pl.UTF-8
+Debugger dla programÃ³w kompilowanych kompilatorem C Intela od Intela.
 
 %prep
 %setup -q -n l_cc_p_%{fileversion}
